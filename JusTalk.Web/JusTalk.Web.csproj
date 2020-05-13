@@ -4,5 +4,19 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="Contracts\v1\AutoMapper" />
+      <Folder Include="Contracts\v1\Requests" />
+      <Folder Include="Contracts\v1\Responses" />
+      <Folder Include="Contracts\v1\Validators" />
+      <Folder Include="Controllers\v1" />
+      <Folder Include="Options" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\JusTalk.DAL\JusTalk.DAL.csproj" />
+      <ProjectReference Include="..\JusTalk.DomainModel\JusTalk.DomainModel.csproj" />
+    </ItemGroup>
+
 
 </Project>
