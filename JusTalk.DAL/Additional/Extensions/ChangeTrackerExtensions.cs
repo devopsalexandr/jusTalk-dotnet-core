@@ -17,7 +17,7 @@ namespace JusTalk.DAL
 						break;
 					
 					case EntityState.Modified:
-						entityEntry.Entity.CreatedAt = DateTime.Now;
+						entityEntry.Entity.UpdatedAt = DateTime.Now;
 						break;
 				}
 			}
