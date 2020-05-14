@@ -17,6 +17,13 @@ namespace JusTalk.DAL
         {
             // relations here
             base.OnModelCreating(builder);
+            
+            AfterOnModelCreating(builder);
+        }
+
+        protected virtual void AfterOnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<User>().ToTable("users");
         }
 
         public override int SaveChanges()
