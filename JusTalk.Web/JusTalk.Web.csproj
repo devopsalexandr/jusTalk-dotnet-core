@@ -6,7 +6,6 @@
 
     <ItemGroup>
       <Folder Include="Contracts\v1\AutoMapper" />
-      <Folder Include="Contracts\v1\Requests" />
       <Folder Include="Contracts\v1\Responses" />
       <Folder Include="Contracts\v1\Validators" />
       <Folder Include="Options" />
