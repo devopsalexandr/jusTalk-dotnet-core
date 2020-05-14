@@ -12,5 +12,9 @@ namespace JusTalk.DomainModel
         Task<User> GetOrCreateUserByPhoneAsync(string phoneNumber);
 
         Task SetAuthCodeAsync(User user, string code);
+
+        Task<User> FindByPhoneAndCodeAsync(string phoneNumber, string code);
+
+        Task MakeAuthCodeEmpty(User user);
     }
 }

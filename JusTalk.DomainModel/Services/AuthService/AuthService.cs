@@ -6,10 +6,15 @@ namespace JusTalk.DomainModel
     public class AuthService : IAuthService
     {
         private readonly IUserManager _userManager;
+        
+        private readonly IAccessTokenService _accessTokenService;
+        
+        protected const int MaxMinutesCodeAlive = 5;
 
-        public AuthService(IUserManager userManager)
+        public AuthService(IUserManager userManager, IAccessTokenService accessTokenService)
         {
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
+            _accessTokenService = accessTokenService ?? throw new ArgumentNullException(nameof(accessTokenService));
         }
 
         public async Task<AuthResult> GetVerificationCodeAsync(string phoneNumber)
@@ -27,11 +32,35 @@ namespace JusTalk.DomainModel
 
         public async Task<ConfirmAuthResult> ConfirmAuthAsync(string phoneNumber, string code)
         {
-            // 1. Find user by phone and code
-            // 2. check code minutes
+            var user = await _userManager.FindByPhoneAndCodeAsync(phoneNumber, code);
 
+            if (user == null)
+                return ConfirmAuthResult.Failed("wrong phone number or code verification");
+            
+            var minutesRemaining = CalculateCodeMinutesRemaining(user.UpdatedAt);
+            
+            if (minutesRemaining >= MaxMinutesCodeAlive) 
+                return ConfirmAuthResult.Failed("expired code verification");;
+            
+            await _userManager.MakeAuthCodeEmpty(user);
 
-            throw new MethodAccessException();
+            var accessToken = _accessTokenService.GenerateAccessToken(user);
+
+            return ConfirmAuthResult.Success(new IdentityInfo()
+            {
+                Id = user.Id,
+                AccessToken = accessToken,
+                RefreshToken = null
+            });
+        }
+        
+        private static int CalculateCodeMinutesRemaining(DateTime userTime)
+        {
+            var currentTime = DateTime.Now;
+
+            var ct = currentTime - userTime;
+
+            return ct.Minutes;
         }
         
         private static string GenerateRandomCode()

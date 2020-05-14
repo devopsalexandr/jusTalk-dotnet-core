@@ -44,9 +44,12 @@ namespace JusTalk.Web.Controllers
             var phoneNumber = confirmPhoneRequest.PhoneNumber;
             var codeVerification = confirmPhoneRequest.CodeVerification;
             
-            // var authenticationResult = await _authService.GetAccessTokenAsync(phoneNumber, codeVerification);
+            var authenticationResult = await _authService.ConfirmAuthAsync(phoneNumber, codeVerification);
 
-            return Ok();
+            if (!authenticationResult.Succeeded)
+                return BadRequest();
+
+            return Ok(authenticationResult.IdentityInfo);
         }
     }
 }

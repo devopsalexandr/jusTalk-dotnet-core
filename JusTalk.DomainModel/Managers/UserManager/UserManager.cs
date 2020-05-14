@@ -51,5 +51,16 @@ namespace JusTalk.DomainModel
             _dbContext.Users.Update(user);
             await _dbContext.SaveChangesAsync();
         }
+
+        public Task<User> FindByPhoneAndCodeAsync(string phoneNumber, string code)
+        {
+            return _dbContext.Users.FirstOrDefaultAsync(u => u.Phone == phoneNumber && u.AuthCode == code);
+        }
+        
+        public Task MakeAuthCodeEmpty(User user)
+        {
+            return SetAuthCodeAsync(user, null);
+        }
+
     }
 }
