@@ -8,7 +8,7 @@ namespace JusTalk.Web.Contracts.v1
 
         public const string Base = "/" + Root + "/" + Version;
 
-        public static class Authentication
+        public static class Identity
         {
             public const string Login = Base + "/login";
 
