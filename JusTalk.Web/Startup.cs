@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using JusTalk.DomainModel;
+using JusTalk.DomainModel.Managers.Common;
+using JusTalk.DomainModel.Services.IdentityConfirmationService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,6 +33,7 @@ namespace JusTalk.Web
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IUserManager, UserManager>();
             services.AddTransient<IAccessTokenService, AccessTokenService>();
+            services.AddTransient<IIdentityConfirmationService, IdentityConfirmationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

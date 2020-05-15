@@ -4,7 +4,7 @@ using JusTalk.DAL;
 using JusTalk.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace JusTalk.DomainModel
+namespace JusTalk.DomainModel.Managers.Common
 {
     public class UserManager : IUserManager
     {

@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using JusTalk.DAL.Entities;
 
-namespace JusTalk.DomainModel
+namespace JusTalk.DomainModel.Managers.Common
 {
     public interface IUserManager
     { 
