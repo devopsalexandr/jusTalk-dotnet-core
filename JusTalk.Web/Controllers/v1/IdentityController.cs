@@ -6,7 +6,7 @@ using JusTalk.Web.Contracts.v1.Requests.Identity;
 using JusTalk.Web.Controllers.v1;
 using Microsoft.AspNetCore.Mvc;
 
-namespace JusTalk.Web.Controllers
+namespace JusTalk.Web.Controllers.v1
 {
     public class IdentityController : ApiController
     {
@@ -33,7 +33,8 @@ namespace JusTalk.Web.Controllers
             
             // _smsService.sendSmsAsync(phoneNumber, confirmationCode);
 
-            return Ok("code send to email " + confirmationCode);
+            return Ok(authResult);
+            // return Ok("code send to email " + confirmationCode);
         }
 
         [HttpPost(ApiRoutes.Identity.Confirm)]
@@ -49,7 +50,7 @@ namespace JusTalk.Web.Controllers
             if (!authenticationResult.Succeeded)
                 return BadRequest();
 
-            return Ok(authenticationResult.IdentityInfo);
+            return Ok(authenticationResult);
         }
     }
 }

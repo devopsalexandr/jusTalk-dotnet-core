@@ -64,7 +64,7 @@ namespace JusTalk.DomainModel
             });
         }
         
-        public async Task<User> GetOrCreateUserByPhoneAsync(string phoneNumber)
+        private async Task<User> GetOrCreateUserByPhoneAsync(string phoneNumber)
         {
             if (string.IsNullOrEmpty(phoneNumber)) throw new ArgumentNullException(nameof(phoneNumber));
 
@@ -82,15 +82,6 @@ namespace JusTalk.DomainModel
             await _dbContext.SaveChangesAsync();
 
             return user;
-        }
-        
-        private static int CalculateCodeMinutesRemaining(DateTime userTime)
-        {
-            var currentTime = DateTime.Now;
-
-            var ct = currentTime - userTime;
-
-            return ct.Minutes;
         }
     }
 }
