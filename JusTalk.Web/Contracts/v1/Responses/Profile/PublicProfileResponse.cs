@@ -7,8 +7,8 @@ namespace JusTalk.Web.Contracts.v1.Responses.Profile
     {
         public string Id { get; set; }
         
-        public virtual string Name { get; set; }
+        public string Name { get; set; }
         
-        public virtual GenderType Gender { get; set; }
+        public GenderType Gender { get; set; }
     }
 }

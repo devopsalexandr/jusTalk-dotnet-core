@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using JusTalk.DomainModel;
 using JusTalk.Web.Contracts.v1;
+using JusTalk.Web.Contracts.v1.Requests.Profile;
 using JusTalk.Web.Contracts.v1.Responses.Profile;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -30,10 +31,14 @@ namespace JusTalk.Web.Controllers.v1
             return Ok(_mapper.Map<UserProfileResponse>(profile));
         }
 
-        // [HttpPut(ApiRoutes.Profile.Update)]
-        // public async Task<IActionResult> Update([FromBody] UpdateAuthUserRequest request)
-        // {
-        //     return Ok();
-        // }
+        [HttpPut(ApiRoutes.Profile.Update)]
+        public async Task<IActionResult> Update([FromBody] UpdateAuthUserRequest request)
+        {
+            var profileData = _mapper.Map<ProfileData>(request);
+            
+            await _profileService.UpdateProfile(profileData);
+            
+            return Ok();
+        }
     }
 }

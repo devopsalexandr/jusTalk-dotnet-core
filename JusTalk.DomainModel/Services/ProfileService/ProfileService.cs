@@ -13,13 +13,17 @@ namespace JusTalk.DomainModel
         
         private readonly ApplicationContext _dbContext;
         
-        private readonly IConfigurationProvider _mapperConfiguration = null;
+        private readonly IConfigurationProvider _mapperConfiguration;
+        
+        private readonly IMapper _mapper;
 
         public ProfileService(ISecurityService securityService, ApplicationContext dbContext, IMapper mapper)
         {
             _securityService = securityService ?? throw new ArgumentNullException(nameof(securityService));
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _mapperConfiguration = mapper != null ? mapper.ConfigurationProvider : throw new ArgumentNullException(nameof(mapper));
+            _mapper = mapper;
+
         }
 
         public async Task<UserProfile> GetProfileAsync()
@@ -34,6 +38,28 @@ namespace JusTalk.DomainModel
                 throw new Exception("The user is not found"); // ToDo: create Exception
 
             return profile;
+        }
+
+        public async Task UpdateProfile(ProfileData profileData)
+        {
+            var userId = _securityService.GetUserId();
+
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+            var profileDataType = profileData.GetType();
+            var userType = user.GetType();
+
+            foreach (var profileDataProperty in profileDataType.GetProperties())
+            {
+                var profileDataPropertyName = profileDataProperty.Name;
+                var profileDataPropertyValue = profileDataProperty.GetValue(profileData);
+
+                var userProperty = userType.GetProperty(profileDataPropertyName);
+                userProperty?.SetValue(user, profileDataPropertyValue);
+            }
+
+            _dbContext.Users.Update(user);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

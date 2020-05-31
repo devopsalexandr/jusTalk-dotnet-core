@@ -7,14 +7,14 @@ namespace JusTalk.Web.Contracts.v1.Responses.Profile
     {
         public string Id { get; set; }
         
-        public virtual string Phone { get; set; }
+        public string Phone { get; set; }
 
-        public virtual string Name { get; set; }
+        public string Name { get; set; }
         
-        public virtual GenderType Gender { get; set; }
+        public GenderType Gender { get; set; }
 
-        public virtual DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
         
-        public virtual DateTime UpdatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 }
