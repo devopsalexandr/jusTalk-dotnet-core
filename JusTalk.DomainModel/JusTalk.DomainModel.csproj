@@ -5,16 +5,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Managers" />
-      <Folder Include="Services" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\JusTalk.DAL\JusTalk.DAL.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="AutoMapper" Version="9.0.0" />
+      <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.5.1" />
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.5.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Managers\Admin" />
     </ItemGroup>
 
 </Project>

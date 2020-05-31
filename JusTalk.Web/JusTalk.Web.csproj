@@ -6,7 +6,6 @@
 
     <ItemGroup>
       <Folder Include="Contracts\v1\AutoMapper" />
-      <Folder Include="Contracts\v1\Requests" />
       <Folder Include="Contracts\v1\Responses" />
       <Folder Include="Contracts\v1\Validators" />
       <Folder Include="Options" />
@@ -26,6 +25,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="9.0.0" />
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.4" />
       <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.1" />
     </ItemGroup>
 
