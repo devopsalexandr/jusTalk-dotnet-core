@@ -1,5 +1,6 @@
 using AutoMapper;
 using JusTalk.DAL;
+using JusTalk.DomainModel.Managers.Common.Models;
 using JusTalk.Web.Contracts.v1.Responses.Profile;
 
 namespace JusTalk.Web.Contracts.v1.AutoMapper
@@ -10,6 +11,8 @@ namespace JusTalk.Web.Contracts.v1.AutoMapper
         {
             CreateMap<User, DomainModel.UserProfile>();
             CreateMap<DomainModel.UserProfile, UserProfileResponse>();
+            CreateMap<User, UserReadModel>();
+            CreateMap<UserReadModel, PublicProfileResponse>();
         }
     }
 }

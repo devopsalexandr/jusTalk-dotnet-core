@@ -11,8 +11,6 @@ namespace JusTalk.DomainModel.Managers.Common.Models
 
         public virtual string Name { get; set; }
         
-        public virtual string AuthCode { get; set; }
-
         public virtual GenderType Gender { get; set; }
 
         public virtual DateTime CreatedAt { get; set; }
