@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using JusTalk.DAL;
-using JusTalk.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace JusTalk.DomainModel.Managers.Common

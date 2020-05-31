@@ -1,8 +1,9 @@
 using System;
+using JusTalk.DAL;
 
-namespace JusTalk.DAL
+namespace JusTalk.Web.Contracts.v1.Responses.Profile
 {
-    public class User : ITimestampable
+    public class UserProfileResponse
     {
         public string Id { get; set; }
         
@@ -10,17 +11,10 @@ namespace JusTalk.DAL
 
         public virtual string Name { get; set; }
         
-        public virtual string AuthCode { get; set; }
-
         public virtual GenderType Gender { get; set; }
 
         public virtual DateTime CreatedAt { get; set; }
         
         public virtual DateTime UpdatedAt { get; set; }
-
-        public User()
-        {
-            Id = Guid.NewGuid().ToString();
-        }
     }
 }

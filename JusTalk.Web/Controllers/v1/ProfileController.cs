@@ -1,33 +1,39 @@
+using System;
 using System.Threading.Tasks;
+using AutoMapper;
+using JusTalk.DomainModel;
 using JusTalk.Web.Contracts.v1;
+using JusTalk.Web.Contracts.v1.Responses.Profile;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JusTalk.Web.Controllers.v1
 {
+    [Authorize]
     public class ProfileController : ApiController
     {
-        public ProfileController()
+        private readonly IProfileService _profileService;
+        
+        private readonly IMapper _mapper;
+        
+        public ProfileController(IProfileService profileService, IMapper mapper)
         {
+            _profileService = profileService ?? throw new ArgumentNullException(nameof(profileService));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [HttpGet(ApiRoutes.Profile.Index)]
         public async Task<IActionResult> Index()
         {
-            return Ok();
+            var profile = await _profileService.GetProfileAsync();
+            return Ok(_mapper.Map<UserProfileResponse>(profile));
         }
 
-        [HttpGet(ApiRoutes.Profile.Show)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Show([FromRoute] int id)
-        {
-            return Ok();
-        }
-
-        [HttpPut(ApiRoutes.Profile.Update)]
-        public async Task<IActionResult> Update([FromBody] UpdateAuthUserRequest request)
-        {
-            return Ok();
-        }
+        // [HttpPut(ApiRoutes.Profile.Update)]
+        // public async Task<IActionResult> Update([FromBody] UpdateAuthUserRequest request)
+        // {
+        //     return Ok();
+        // }
     }
 }

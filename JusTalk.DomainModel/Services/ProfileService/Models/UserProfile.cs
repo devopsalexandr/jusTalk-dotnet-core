@@ -1,8 +1,9 @@
 using System;
+using JusTalk.DAL;
 
-namespace JusTalk.DAL
+namespace JusTalk.DomainModel
 {
-    public class User : ITimestampable
+    public class UserProfile
     {
         public string Id { get; set; }
         
@@ -17,10 +18,5 @@ namespace JusTalk.DAL
         public virtual DateTime CreatedAt { get; set; }
         
         public virtual DateTime UpdatedAt { get; set; }
-
-        public User()
-        {
-            Id = Guid.NewGuid().ToString();
-        }
     }
 }
