@@ -14,5 +14,14 @@ namespace JusTalk.Web.Contracts.v1
 
             public const string Confirm = Base + "/confirm";
         }
+        
+        public static class Profile
+        {
+            public const string Index = Base + "/profile";
+            
+            public const string Show = Base + "/profile/{id}";
+            
+            public const string Update = Base + "/profile";
+        }
     }
 }

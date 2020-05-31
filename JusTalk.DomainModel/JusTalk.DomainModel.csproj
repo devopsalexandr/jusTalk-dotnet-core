@@ -16,6 +16,7 @@
 
     <ItemGroup>
       <Folder Include="Managers\Admin" />
+      <Folder Include="Managers\Common\ProfileService" />
     </ItemGroup>
 
 </Project>
