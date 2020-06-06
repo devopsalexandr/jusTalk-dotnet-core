@@ -1,6 +1,6 @@
 using System;
 
-namespace JusTalk.DAL.Entities
+namespace JusTalk.DAL
 {
     public class User : ITimestampable
     {

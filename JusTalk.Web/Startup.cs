@@ -30,10 +30,14 @@ namespace JusTalk.Web
         {
             services.InstallServicesInAssembly(Configuration);
             
+            services.AddHttpContextAccessor();
+
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IUserManager, UserManager>();
             services.AddTransient<IAccessTokenService, AccessTokenService>();
             services.AddTransient<IIdentityConfirmationService, IdentityConfirmationService>();
+            services.AddTransient<ISecurityService, SecurityService>();
+            services.AddTransient<IProfileService, ProfileService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +52,7 @@ namespace JusTalk.Web
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });

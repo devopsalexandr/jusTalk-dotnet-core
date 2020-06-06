@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using JusTalk.DAL.Entities;
+using JusTalk.DAL;
 
 namespace JusTalk.DomainModel.Services.IdentityConfirmationService
 {

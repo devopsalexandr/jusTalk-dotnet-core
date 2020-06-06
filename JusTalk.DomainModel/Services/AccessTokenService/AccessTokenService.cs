@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using JusTalk.DAL.Entities;
+using JusTalk.DAL;
 using JusTalk.DomainModel.Options;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;

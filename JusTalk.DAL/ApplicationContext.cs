@@ -1,6 +1,5 @@
 using System.Threading;
 using System.Threading.Tasks;
-using JusTalk.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace JusTalk.DAL

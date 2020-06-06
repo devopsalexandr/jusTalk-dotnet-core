@@ -1,4 +1,4 @@
-namespace JusTalk.DAL.Entities
+namespace JusTalk.DAL
 {
     public enum GenderType
     {

@@ -1,5 +1,5 @@
 using AutoMapper;
-using JusTalk.DAL.Entities;
+using JusTalk.DAL;
 using JusTalk.DomainModel.Managers.Common.Models;
 
 namespace JusTalk.DomainModel.Managers.Common.AutoMapper
