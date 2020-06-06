@@ -33,7 +33,7 @@ namespace JusTalk.Web.Controllers.v1
             
             // _smsService.sendSmsAsync(phoneNumber, confirmationCode);
 
-            return Ok(authResult);
+            return OkWithResult(authResult);
             // return Ok("code send to email " + confirmationCode);
         }
 
@@ -50,7 +50,7 @@ namespace JusTalk.Web.Controllers.v1
             if (!authenticationResult.Succeeded)
                 return BadRequest();
 
-            return Ok(authenticationResult);
+            return OkWithResult(authenticationResult);
         }
     }
 }

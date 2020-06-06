@@ -28,7 +28,7 @@ namespace JusTalk.Web.Controllers.v1
         public async Task<IActionResult> Index()
         {
             var profile = await _profileService.GetProfileAsync();
-            return Ok(_mapper.Map<UserProfileResponse>(profile));
+            return OkWithResult(_mapper.Map<UserProfileResponse>(profile));
         }
 
         [HttpPut(ApiRoutes.Profile.Update)]

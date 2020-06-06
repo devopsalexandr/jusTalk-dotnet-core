@@ -31,7 +31,7 @@ namespace JusTalk.Web.Controllers.v1
             if (user == null)
                 return NotFound();
             
-            return Ok(_mapper.Map<PublicProfileResponse>(user));
+            return OkWithResult(_mapper.Map<PublicProfileResponse>(user));
         }
     }
 }
