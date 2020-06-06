@@ -15,7 +15,7 @@ namespace JusTalk.Web
                     // options.InvalidModelStateResponseFactory = actionContext => 
                     //     new UnprocessableEntityObjectResult(new ErrorResponse(actionContext.ModelState.ToErrorList()));
                     options.SuppressMapClientErrors = true; // disable 404 error details
-                });
+                }).AddNewtonsoftJson();
         }
     }
 }
