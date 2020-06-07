@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using JusTalk.DAL;
-using JusTalk.DAL;
 
 namespace JusTalk.DomainModel.Services.IdentityConfirmationService
 {
@@ -10,7 +9,6 @@ namespace JusTalk.DomainModel.Services.IdentityConfirmationService
         private readonly ApplicationContext _dbContext;
         
         protected const int MaxMinutesCodeAlive = 5;
-
         
         public IdentityConfirmationService(ApplicationContext dbContext)
         {

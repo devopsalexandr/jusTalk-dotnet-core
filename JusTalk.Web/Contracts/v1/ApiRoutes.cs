@@ -23,5 +23,10 @@ namespace JusTalk.Web.Contracts.v1
             
             public const string Update = Base + "/profile";
         }
+        
+        public static class Search
+        {
+            public const string Index = Base + "/search";
+        }
     }
 }

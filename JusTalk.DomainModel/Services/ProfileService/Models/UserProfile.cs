@@ -3,7 +3,7 @@ using JusTalk.DAL;
 
 namespace JusTalk.DomainModel
 {
-    public class UserProfile
+    public class UserProfile : ITimestampable
     {
         public string Id { get; set; }
         

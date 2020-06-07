@@ -16,6 +16,8 @@ namespace JusTalk.Web.Contracts.v1.AutoMapper
             CreateMap<User, UserReadModel>();
             CreateMap<UserReadModel, PublicProfileResponse>();
             CreateMap<UpdateAuthUserRequest, ProfileData>();
+            
+            CreateMap<User, MemberReadModel>();
         }
     }
 }

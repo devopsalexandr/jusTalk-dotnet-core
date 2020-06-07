@@ -38,6 +38,7 @@ namespace JusTalk.Web
             services.AddTransient<IIdentityConfirmationService, IdentityConfirmationService>();
             services.AddTransient<ISecurityService, SecurityService>();
             services.AddTransient<IProfileService, ProfileService>();
+            services.AddTransient<IMemberSearchService, MemberSearchService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
