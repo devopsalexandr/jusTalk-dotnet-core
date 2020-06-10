@@ -25,7 +25,7 @@ namespace JusTalk.Web.Controllers.v1
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        [HttpGet(ApiRoutes.Search.Index)]
+        [HttpPost(ApiRoutes.Search.Index)]
         public async Task<IActionResult> Index([FromBody] SearchRequest request, [FromQuery] int page = 1, int count = 10)
         {
             var memberSearchFilters = _mapper.Map<MemberSearchFilters>(request); 

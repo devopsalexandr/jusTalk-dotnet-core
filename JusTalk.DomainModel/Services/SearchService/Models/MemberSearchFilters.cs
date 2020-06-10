@@ -4,6 +4,6 @@ namespace JusTalk.DomainModel
 {
     public class MemberSearchFilters
     {
-        public GenderType GenderType { get; set; }
+        public GenderType Gender { get; set; }
     }
 }

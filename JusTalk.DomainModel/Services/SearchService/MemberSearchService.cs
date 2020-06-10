@@ -23,9 +23,22 @@ namespace JusTalk.DomainModel
             _securityService = securityService ?? throw new ArgumentNullException(nameof(securityService));
         }
 
-        public async Task<PaginationInfo<MemberReadModel>> Find(MemberSearchFilters memberSearchData, int currentPage = 1, int countPerPage = 10)
+        public Task<PaginationInfo<MemberReadModel>> Find(MemberSearchFilters memberSearchFilters, int currentPage = 1, int countPerPage = 10)
         {
-            var membersCount = await _dbContext.Users.CountAsync();
+            var searchQuery = CreateQueryByFilters(_dbContext.Users, memberSearchFilters);
+
+            return PaginateAsync(searchQuery, currentPage, countPerPage);
+        }
+
+        private IQueryable<User> CreateQueryByFilters(IQueryable<User> dbSet, MemberSearchFilters memberSearchFilters)
+        {
+            return dbSet.Where(u => u.Id != _securityService.GetUserId())
+                .Where(u => u.Gender == memberSearchFilters.Gender);
+        }
+
+        private async Task<PaginationInfo<MemberReadModel>> PaginateAsync(IQueryable<User> searchQuery, int currentPage = 1, int countPerPage = 10)
+        {
+            var membersCount = await searchQuery.CountAsync();
             var totalPage = (int)Math.Ceiling((float)membersCount / countPerPage);
             
             if (totalPage < 1) totalPage = 1;
@@ -33,7 +46,7 @@ namespace JusTalk.DomainModel
             if (totalPage < currentPage) currentPage = totalPage;
             if (countPerPage < 1) countPerPage = 10;
             
-            var members = await _dbContext.Users
+            var members = await searchQuery
                 .ProjectTo<MemberReadModel>(_mapperConfiguration)
                 .Skip((currentPage - 1) * countPerPage)
                 .Take(countPerPage)

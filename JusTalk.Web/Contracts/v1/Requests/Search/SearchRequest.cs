@@ -4,6 +4,6 @@ namespace JusTalk.Web.Contracts.v1.Requests.Search
 {
     public class SearchRequest
     {
-        public GenderType gender { get; set; }
+        public GenderType Gender { get; set; }
     }
 }
