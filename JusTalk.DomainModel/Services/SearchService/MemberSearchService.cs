@@ -36,7 +36,7 @@ namespace JusTalk.DomainModel
             var queryBuilder = dbSet.Where(u => u.Id != _securityService.GetUserId());
 
             if (memberSearchFilters.Gender.HasValue) 
-                queryBuilder.WhereGender((GenderType) memberSearchFilters.Gender);
+                queryBuilder = queryBuilder.WhereGender((GenderType) memberSearchFilters.Gender);
 
             return queryBuilder;
         }
