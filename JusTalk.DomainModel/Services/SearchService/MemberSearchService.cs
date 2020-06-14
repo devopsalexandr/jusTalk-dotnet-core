@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using JusTalk.DAL;
+using JusTalk.DomainModel.Additional.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace JusTalk.DomainModel
@@ -32,8 +33,12 @@ namespace JusTalk.DomainModel
 
         private IQueryable<User> CreateQueryByFilters(IQueryable<User> dbSet, MemberSearchFilters memberSearchFilters)
         {
-            return dbSet.Where(u => u.Id != _securityService.GetUserId())
-                .Where(u => u.Gender == memberSearchFilters.Gender);
+            var queryBuilder = dbSet.Where(u => u.Id != _securityService.GetUserId());
+
+            if (memberSearchFilters.Gender.HasValue) 
+                queryBuilder.WhereGender((GenderType) memberSearchFilters.Gender);
+
+            return queryBuilder;
         }
 
         private async Task<PaginationInfo<MemberReadModel>> PaginateAsync(IQueryable<User> searchQuery, int currentPage = 1, int countPerPage = 10)

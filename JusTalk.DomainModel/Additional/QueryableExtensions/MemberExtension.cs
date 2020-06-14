@@ -10,5 +10,8 @@ namespace JusTalk.DomainModel.Additional.QueryableExtensions
         {
             throw new Exception();
         }
+        
+        public static IQueryable<User> WhereGender(this IQueryable<User> source, GenderType genderType) 
+            => source.Where(x => x.Gender == genderType);
     }
 }
