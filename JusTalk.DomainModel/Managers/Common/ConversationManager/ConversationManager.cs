@@ -40,22 +40,7 @@ namespace JusTalk.DomainModel.Managers.Common.MessageManager
 
             var receiverId = sendMessageData.ReceiverId;
 
-            var conversation = await _dbContext.Conversations
-                .Where(c => c.FirstUser.Id == authUserId && c.SecondUser.Id == receiverId || c.FirstUser.Id == receiverId && c.SecondUser.Id == authUserId)
-                .FirstOrDefaultAsync();
-
-            if (conversation == null)
-            {
-                conversation = new Conversation()
-                {
-                    FirstUserId = authUserId,
-                    SecondUserId = receiverId
-                };
-                
-                await _dbContext.Conversations.AddAsync(conversation);
-                
-                await _dbContext.SaveChangesAsync();
-            }
+            var conversation = await GetOrCreateConversation(authUserId, receiverId);
 
             var message = new Message()
             {
@@ -69,6 +54,28 @@ namespace JusTalk.DomainModel.Managers.Common.MessageManager
             await _dbContext.SaveChangesAsync();
 
             return _mapper.Map<MessageReadModel>(message);
+        }
+
+        private async Task<Conversation> GetOrCreateConversation(string firstUser, string secondUser)
+        {
+            var conversation = await _dbContext.Conversations
+                .Where(c => c.FirstUser.Id == firstUser && c.SecondUser.Id == secondUser || c.FirstUser.Id == secondUser && c.SecondUser.Id == firstUser)
+                .FirstOrDefaultAsync();
+
+            if (conversation != null) 
+                return conversation;
+            
+            conversation = new Conversation()
+            {
+                FirstUserId = firstUser,
+                SecondUserId = secondUser
+            };
+                
+            await _dbContext.Conversations.AddAsync(conversation);
+                
+            await _dbContext.SaveChangesAsync();
+
+            return conversation;
         }
     }
 }
