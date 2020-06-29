@@ -18,7 +18,6 @@ namespace JusTalk.DomainModel.Managers.Common
         {
             _dbContext = dbContext;
             _mapperConfiguration = mapper != null ? mapper.ConfigurationProvider : throw new ArgumentNullException(nameof(mapper));
-
         }
         
         public async Task AddAsync(User user)

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JusTalk.DAL.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20200614104332_AddMessagesTable")]
-    partial class AddMessagesTable
+    [Migration("20200628154456_AddIdToMessages")]
+    partial class AddIdToMessages
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,10 +19,40 @@ namespace JusTalk.DAL.Migrations
                 .HasAnnotation("ProductVersion", "3.1.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("JusTalk.DAL.Conversation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("FirstUserId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<string>("SecondUserId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FirstUserId");
+
+                    b.HasIndex("SecondUserId");
+
+                    b.ToTable("Conversations");
+                });
+
             modelBuilder.Entity("JusTalk.DAL.Message", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("ConversationId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
@@ -34,17 +64,14 @@ namespace JusTalk.DAL.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("UserFromIdId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
-                    b.Property<string>("UserToIdId")
+                    b.Property<string>("UserId")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserFromIdId");
+                    b.HasIndex("ConversationId");
 
-                    b.HasIndex("UserToIdId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Messages");
                 });
@@ -77,15 +104,28 @@ namespace JusTalk.DAL.Migrations
                     b.ToTable("users");
                 });
 
+            modelBuilder.Entity("JusTalk.DAL.Conversation", b =>
+                {
+                    b.HasOne("JusTalk.DAL.User", "FirstUser")
+                        .WithMany()
+                        .HasForeignKey("FirstUserId");
+
+                    b.HasOne("JusTalk.DAL.User", "SecondUser")
+                        .WithMany()
+                        .HasForeignKey("SecondUserId");
+                });
+
             modelBuilder.Entity("JusTalk.DAL.Message", b =>
                 {
-                    b.HasOne("JusTalk.DAL.User", "UserFromId")
-                        .WithMany()
-                        .HasForeignKey("UserFromIdId");
+                    b.HasOne("JusTalk.DAL.Conversation", "Conversation")
+                        .WithMany("Messages")
+                        .HasForeignKey("ConversationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("JusTalk.DAL.User", "UserToId")
+                    b.HasOne("JusTalk.DAL.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserToIdId");
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }
