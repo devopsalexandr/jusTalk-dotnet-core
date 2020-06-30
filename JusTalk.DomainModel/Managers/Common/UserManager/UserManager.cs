@@ -3,10 +3,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using JusTalk.DAL;
-using JusTalk.DomainModel.Managers.Common.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace JusTalk.DomainModel.Managers.Common
+namespace JusTalk.DomainModel.Managers.Common.UserManger
 {
     public class UserManager : IUserManager
     {

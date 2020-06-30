@@ -1,7 +1,7 @@
 using AutoMapper;
 using JusTalk.DAL;
 using JusTalk.DomainModel;
-using JusTalk.DomainModel.Managers.Common.Models;
+using JusTalk.DomainModel.Managers.Common.UserManger;
 using JusTalk.Web.Contracts.v1.Requests.Profile;
 using JusTalk.Web.Contracts.v1.Responses.Profile;
 

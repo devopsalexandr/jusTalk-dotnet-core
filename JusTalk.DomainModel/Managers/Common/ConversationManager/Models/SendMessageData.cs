@@ -1,4 +1,4 @@
-namespace JusTalk.DomainModel.Managers.Common.MessageManager.Models
+namespace JusTalk.DomainModel.Managers.Common.ConversationManager
 {
     public class SendMessageData
     {

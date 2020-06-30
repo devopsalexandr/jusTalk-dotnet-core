@@ -1,11 +1,13 @@
 using System;
 using System.Threading.Tasks;
-using JusTalk.DomainModel.Managers.Common.MessageManager;
+using JusTalk.DomainModel.Managers.Common.ConversationManager;
 using JusTalk.Web.Contracts.v1;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JusTalk.Web.Controllers.v1
 {
+    [Authorize]
     public class ConversationsController : ApiController
     {
         private readonly IConversationManager _conversationManager;
@@ -16,10 +18,11 @@ namespace JusTalk.Web.Controllers.v1
         }
 
         [HttpGet(ApiRoutes.Conversations.Index)]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] int page = 1, int count = 10)
         {
-            // var conversations = await _conversationManager.GetConversations();
-            return Ok();
+            var conversations = await _conversationManager.GetConversationsAsync(page, count);
+           
+            return Ok(conversations);
         }
     }
 }

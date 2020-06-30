@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace JusTalk.DAL.Migrations
 {
-    public partial class AddConversations : Migration
+    public partial class AddConversationsWithMassages : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,7 +44,7 @@ namespace JusTalk.DAL.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Text = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true),
-                    ConversationId = table.Column<int>(nullable: true),
+                    ConversationId = table.Column<int>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: false)
                 },
@@ -56,7 +56,7 @@ namespace JusTalk.DAL.Migrations
                         column: x => x.ConversationId,
                         principalTable: "Conversations",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Messages_users_UserId",
                         column: x => x.UserId,
@@ -93,6 +93,9 @@ namespace JusTalk.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Conversations");
+
+            migrationBuilder.DropTable(
+                name: "users");
         }
     }
 }

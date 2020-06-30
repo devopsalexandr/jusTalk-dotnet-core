@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JusTalk.DAL.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20200628154456_AddIdToMessages")]
-    partial class AddIdToMessages
+    [Migration("20200630133415_AddConversationsWithMassages")]
+    partial class AddConversationsWithMassages
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

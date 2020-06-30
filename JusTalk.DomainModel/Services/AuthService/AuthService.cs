@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using JusTalk.DAL;
-using JusTalk.DomainModel.Managers.Common;
+using JusTalk.DomainModel.Managers.Common.UserManger;
 using JusTalk.DomainModel.Services.IdentityConfirmationService;
 using Microsoft.EntityFrameworkCore;
 

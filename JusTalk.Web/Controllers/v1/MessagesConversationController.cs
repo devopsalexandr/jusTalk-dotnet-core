@@ -2,8 +2,7 @@ using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using JusTalk.DAL;
-using JusTalk.DomainModel.Managers.Common.MessageManager;
-using JusTalk.DomainModel.Managers.Common.MessageManager.Models;
+using JusTalk.DomainModel.Managers.Common.ConversationManager;
 using JusTalk.Web.Contracts.v1;
 using JusTalk.Web.Contracts.v1.Requests.Conversation;
 using Microsoft.AspNetCore.Authorization;
@@ -14,15 +13,12 @@ namespace JusTalk.Web.Controllers.v1
     [Authorize]
     public class MessagesConversationController : ApiController
     {
-        private readonly ApplicationContext _dbContext;
-        
         private readonly IMapper _mapper;
         
         private readonly IConversationManager _conversationManager;
 
-        public MessagesConversationController(ApplicationContext dbContext, IMapper mapper, IConversationManager conversationManager)
+        public MessagesConversationController(IConversationManager conversationManager, IMapper mapper)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _conversationManager = conversationManager ?? throw new ArgumentNullException(nameof(conversationManager));
         }
