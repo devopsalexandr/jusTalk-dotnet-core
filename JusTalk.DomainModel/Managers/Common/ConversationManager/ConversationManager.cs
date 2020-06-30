@@ -5,6 +5,7 @@ using System.Transactions;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using JusTalk.DAL;
+using JusTalk.DomainModel.Managers.Common.Mappings;
 using Microsoft.EntityFrameworkCore;
 
 namespace JusTalk.DomainModel.Managers.Common.ConversationManager
@@ -35,8 +36,8 @@ namespace JusTalk.DomainModel.Managers.Common.ConversationManager
             var authUserId = _securityService.GetUserId();
 
             var conversationsQuery = _dbContext.Conversations
+                .ToConversationListReadModel()
                 .Where(c => c.FirstUser.Id == authUserId || c.SecondUser.Id == authUserId);
-
 
             return PaginateAsync(conversationsQuery, currentPage, countPerPage);
         }
@@ -68,7 +69,7 @@ namespace JusTalk.DomainModel.Managers.Common.ConversationManager
             }
         }
         
-        private async Task<PaginationInfo<ConversationListReadModel>> PaginateAsync(IQueryable<Conversation> searchQuery, int currentPage = 1, int countPerPage = 10)
+        private async Task<PaginationInfo<ConversationListReadModel>> PaginateAsync(IQueryable<ConversationListReadModel> searchQuery, int currentPage = 1, int countPerPage = 10)
         {
             var entitiesCount = await searchQuery.CountAsync();
             var totalPage = (int)Math.Ceiling((float)entitiesCount / countPerPage);
@@ -79,7 +80,6 @@ namespace JusTalk.DomainModel.Managers.Common.ConversationManager
             if (countPerPage < 1) countPerPage = 10;
             
             var entities = await searchQuery
-                .ProjectTo<ConversationListReadModel>(_mapperConfiguration)
                 .Skip((currentPage - 1) * countPerPage)
                 .Take(countPerPage)
                 .ToListAsync();
