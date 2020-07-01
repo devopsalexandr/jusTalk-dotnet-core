@@ -20,9 +20,9 @@ namespace JusTalk.Web.Controllers.v1
         [HttpGet(ApiRoutes.Conversations.Index)]
         public async Task<IActionResult> Index([FromQuery] int page = 1, int count = 10)
         {
-            var conversations = await _conversationManager.GetConversationsAsync(page, count);
-           
-            return Ok(conversations);
+            var conversations = await _conversationManager.GetConversationsListAsync(page, count);
+
+            return OkWithResult(conversations);
         }
     }
 }

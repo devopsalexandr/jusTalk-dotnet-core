@@ -12,7 +12,9 @@ namespace JusTalk.DomainModel.Managers.Common.ConversationManager
         public User FirstUser { get; set; }
         
         public User SecondUser { get; set; }
-        
+
+        public List<Message> Messages { get; set; }
+
         public DateTime CreatedAt { get; set; }
         
         public DateTime UpdatedAt { get; set; }

@@ -11,16 +11,22 @@ using Microsoft.AspNetCore.Mvc;
 namespace JusTalk.Web.Controllers.v1
 {
     [Authorize]
-    public class MessagesConversationController : ApiController
+    public class ConversationMessagesController : ApiController
     {
         private readonly IMapper _mapper;
         
         private readonly IConversationManager _conversationManager;
 
-        public MessagesConversationController(IConversationManager conversationManager, IMapper mapper)
+        public ConversationMessagesController(IConversationManager conversationManager, IMapper mapper)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _conversationManager = conversationManager ?? throw new ArgumentNullException(nameof(conversationManager));
+        }
+
+        [HttpGet(ApiRoutes.Conversations.Messages.Index)]
+        public async Task<IActionResult> Index(int id)
+        {
+            return OkWithMessage(id.ToString());
         }
 
         [HttpPost(ApiRoutes.Conversations.Index)]
@@ -29,7 +35,8 @@ namespace JusTalk.Web.Controllers.v1
             var messageData = _mapper.Map<SendMessageData>(request);
             var message = await _conversationManager.SendMessageAsync(messageData);
 
-            return Ok(message);
+            return OkWithResult(message);
         }
+        
     }
 }

@@ -32,6 +32,11 @@ namespace JusTalk.Web.Contracts.v1
         public static class Conversations
         {
             public const string Index = Base + "/conversations";
+            
+            public static class Messages
+            {
+                public const string Index = Conversations.Index + "/{id}/messages";
+            }
         }
     }
 }

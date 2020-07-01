@@ -31,7 +31,16 @@ namespace JusTalk.DomainModel.Managers.Common.ConversationManager
             _mapperConfiguration = mapper.ConfigurationProvider ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public Task<PaginationInfo<ConversationListReadModel>> GetConversationsAsync(int currentPage = 1, int countPerPage = 10)
+        // public async Task<PaginationInfo<MessageReadModel>> GetConversationMessagesAsync(int id, int currentPage = 1, int countPerPage = 10)
+        // {
+        //     var conversation = await _dbContext.Conversations.Where(c => c.Id == id)
+        //         .Select(c => c.Messages)
+        //         .PaginateAsync(currentPage, countPerPage);
+        //
+        //     return conversation;
+        // }
+
+        public Task<PaginationInfo<ConversationListReadModel>> GetConversationsListAsync(int currentPage = 1, int countPerPage = 10)
         {
             var authUserId = _securityService.GetUserId();
 
@@ -39,7 +48,7 @@ namespace JusTalk.DomainModel.Managers.Common.ConversationManager
                 .ToConversationListReadModel()
                 .Where(c => c.FirstUser.Id == authUserId || c.SecondUser.Id == authUserId);
 
-            return PaginateAsync(conversationsQuery, currentPage, countPerPage);
+            return conversationsQuery.PaginateAsync(currentPage, countPerPage);
         }
 
         public async Task<MessageReadModel> SendMessageAsync(SendMessageData sendMessageData)
@@ -67,30 +76,6 @@ namespace JusTalk.DomainModel.Managers.Common.ConversationManager
 
                 return _mapper.Map<MessageReadModel>(message);
             }
-        }
-        
-        private async Task<PaginationInfo<ConversationListReadModel>> PaginateAsync(IQueryable<ConversationListReadModel> searchQuery, int currentPage = 1, int countPerPage = 10)
-        {
-            var entitiesCount = await searchQuery.CountAsync();
-            var totalPage = (int)Math.Ceiling((float)entitiesCount / countPerPage);
-            
-            if (totalPage < 1) totalPage = 1;
-            if (currentPage < 1) currentPage = 1;
-            if (totalPage < currentPage) currentPage = totalPage;
-            if (countPerPage < 1) countPerPage = 10;
-            
-            var entities = await searchQuery
-                .Skip((currentPage - 1) * countPerPage)
-                .Take(countPerPage)
-                .ToListAsync();
-            
-            return new PaginationInfo<ConversationListReadModel>()
-            {
-                Entities = entities,
-                CurrentPage = currentPage,
-                CountPerPage = countPerPage,
-                TotalEntities = entitiesCount
-            };
         }
 
         private async Task<Conversation> GetOrCreateConversation(string firstUser, string secondUser)
