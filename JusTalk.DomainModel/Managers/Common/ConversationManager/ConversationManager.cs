@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -31,24 +32,24 @@ namespace JusTalk.DomainModel.Managers.Common.ConversationManager
             _mapperConfiguration = mapper.ConfigurationProvider ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        // public async Task<PaginationInfo<MessageReadModel>> GetConversationMessagesAsync(int id, int currentPage = 1, int countPerPage = 10)
-        // {
-        //     var conversation = await _dbContext.Conversations.Where(c => c.Id == id)
-        //         .Select(c => c.Messages)
-        //         .PaginateAsync(currentPage, countPerPage);
-        //
-        //     return conversation;
-        // }
+        public Task<PaginationInfo<MessageReadModel>> GetConversationMessagesAsync(int id, int currentPage = 1, int countPerPage = 10)
+        {
+            return _dbContext.Conversations.Where(c => c.Id == id)
+                .SelectMany(c => c.Messages)
+                .OrderBy(m => m.Id)
+                .ToMessageReadModel()
+                .PaginateAsync(currentPage, countPerPage);
+        }
 
         public Task<PaginationInfo<ConversationListReadModel>> GetConversationsListAsync(int currentPage = 1, int countPerPage = 10)
         {
             var authUserId = _securityService.GetUserId();
 
-            var conversationsQuery = _dbContext.Conversations
+            var conversations = _dbContext.Conversations
                 .ToConversationListReadModel()
                 .Where(c => c.FirstUser.Id == authUserId || c.SecondUser.Id == authUserId);
 
-            return conversationsQuery.PaginateAsync(currentPage, countPerPage);
+            return conversations.PaginateAsync(currentPage, countPerPage);
         }
 
         public async Task<MessageReadModel> SendMessageAsync(SendMessageData sendMessageData)

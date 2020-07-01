@@ -15,5 +15,15 @@ namespace JusTalk.DomainModel.Managers.Common.Mappings
                 CreatedAt = c.CreatedAt,
                 UpdatedAt = c.UpdatedAt
             });
+        
+        public static IQueryable<MessageReadModel> ToMessageReadModel(this IQueryable<Message> source) =>
+            source.Select(m => new MessageReadModel()
+            {
+                Id = m.Id,
+                Text = m.Text,
+                UserId = m.UserId,
+                CreatedAt = m.CreatedAt,
+                UpdatedAt = m.UpdatedAt
+            });
     }
 }

@@ -26,7 +26,9 @@ namespace JusTalk.Web.Controllers.v1
         [HttpGet(ApiRoutes.Conversations.Messages.Index)]
         public async Task<IActionResult> Index(int id)
         {
-            return OkWithMessage(id.ToString());
+            var messages = await _conversationManager.GetConversationMessagesAsync(id);
+            
+            return OkWithResult(messages);
         }
 
         [HttpPost(ApiRoutes.Conversations.Index)]
