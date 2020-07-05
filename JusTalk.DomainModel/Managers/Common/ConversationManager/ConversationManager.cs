@@ -32,13 +32,31 @@ namespace JusTalk.DomainModel.Managers.Common.ConversationManager
             _mapperConfiguration = mapper.ConfigurationProvider ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public Task<PaginationInfo<MessageReadModel>> GetConversationMessagesAsync(int id, int currentPage = 1, int countPerPage = 10)
+        public async Task<PaginationInfo<MessageReadModel>> GetConversationMessagesAsync(int id, int currentPage = 1, int countPerPage = 10)
         {
-            return _dbContext.Conversations.Where(c => c.Id == id)
+            var isOwner = await isConversationOwner(id);
+
+            if (!isOwner) 
+                throw new EntityAccessException("you are not owner of this conversation");
+            
+            var messages = await _dbContext.Conversations.Where(c => c.Id == id)
                 .SelectMany(c => c.Messages)
                 .OrderBy(m => m.Id)
                 .ToMessageReadModel()
                 .PaginateAsync(currentPage, countPerPage);
+
+            return messages;
+        }
+
+        public async Task<bool> isConversationOwner(int id)
+        {
+            var authUserId = _securityService.GetUserId();
+
+            var conversation = await _dbContext.Conversations.Where(c => c.Id == id)
+                .Where(c => c.FirstUser.Id == authUserId || c.SecondUser.Id == authUserId)
+                .FirstOrDefaultAsync();
+
+            return conversation != null;
         }
 
         public Task<PaginationInfo<ConversationListReadModel>> GetConversationsListAsync(int currentPage = 1, int countPerPage = 10)
