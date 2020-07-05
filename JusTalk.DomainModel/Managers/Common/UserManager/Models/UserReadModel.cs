@@ -1,7 +1,7 @@
 using System;
 using JusTalk.DAL;
 
-namespace JusTalk.DomainModel.Managers.Common.Models
+namespace JusTalk.DomainModel.Managers.Common.UserManger
 {
     public class UserReadModel
     {

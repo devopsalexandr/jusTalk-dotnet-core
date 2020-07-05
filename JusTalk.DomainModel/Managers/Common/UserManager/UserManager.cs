@@ -3,10 +3,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using JusTalk.DAL;
-using JusTalk.DomainModel.Managers.Common.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace JusTalk.DomainModel.Managers.Common
+namespace JusTalk.DomainModel.Managers.Common.UserManger
 {
     public class UserManager : IUserManager
     {
@@ -18,7 +17,6 @@ namespace JusTalk.DomainModel.Managers.Common
         {
             _dbContext = dbContext;
             _mapperConfiguration = mapper != null ? mapper.ConfigurationProvider : throw new ArgumentNullException(nameof(mapper));
-
         }
         
         public async Task AddAsync(User user)

@@ -1,10 +1,9 @@
 using System;
 using System.Threading.Tasks;
 using AutoMapper;
-using JusTalk.DomainModel.Managers.Common;
+using JusTalk.DomainModel.Managers.Common.UserManger;
 using JusTalk.Web.Contracts.v1;
 using JusTalk.Web.Contracts.v1.Responses.Profile;
-using JusTalk.Web.Controllers.v1;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

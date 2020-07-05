@@ -7,6 +7,10 @@ namespace JusTalk.DAL
     public class ApplicationContext : DbContext
     {
         public DbSet<User> Users { set; get; }
+        
+        public DbSet<Conversation> Conversations { set; get; }
+        
+        public DbSet<Message> Messages { set; get; }
 
         public ApplicationContext(DbContextOptions options) : base(options)
         {
@@ -15,6 +19,10 @@ namespace JusTalk.DAL
         protected override void OnModelCreating(ModelBuilder builder)
         {
             // relations here
+            // builder.Entity<Conversation>()
+            //     .HasMany(c => c.Messages)
+            //     .WithOne(m => m.Conversation);
+
             base.OnModelCreating(builder);
             
             AfterOnModelCreating(builder);
